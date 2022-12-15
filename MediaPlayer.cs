@@ -19,23 +19,40 @@ namespace MusicPlayer
 
         void start()
         {
-            playFile("C:\\Users\\Marcus-PC\\Desktop\\music.mp3");
+            string path = @"C:\Users\Marcus-Pc\Desktop\music.mp3";
+
+            string[] sepearator = { "/", "//", "\\", " " };
+            string[] pathArray = path.Split(sepearator, StringSplitOptions.RemoveEmptyEntries);
+
+            string fileName = pathArray.Last();
+
+
+            string[] divider = { "." };
+            string[] fileNameArray = fileName.Split(divider, StringSplitOptions.RemoveEmptyEntries);
+
+            playFile(path, fileNameArray[0] + ".wav");
+
+
         }
 
-        void playFile(string path)
+        void playFile(string path, string FileName)
         {
             SoundPlayer player = new SoundPlayer();
 
-            var infile = @"C:\Users\Marcus-Pc\Desktop\music.mp3";
-            var outfile = @"C:\Users\Marcus-Pc\Desktop\converted.wav";
 
-            using (var reader = new Mp3FileReader(infile))
+            string newPath = Path.GetFullPath(Path.Combine(path, ".."));
+
+            string output = newPath + "\\" + FileName;
+
+            Console.WriteLine(output);
+
+            using (var reader = new Mp3FileReader(path))
             {
-                WaveFileWriter.CreateWaveFile(outfile, reader);
+                WaveFileWriter.CreateWaveFile(output, reader);
             }
+            string directory = Directory.GetCurrentDirectory() + "/music" + output;
 
-
-            player.SoundLocation = outfile;
+            player.SoundLocation = directory;
 
             player.Play();
 
