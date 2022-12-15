@@ -39,20 +39,22 @@ namespace MusicPlayer
         {
             SoundPlayer player = new SoundPlayer();
 
-
+            // grabs olf path and cd ..
             string newPath = Path.GetFullPath(Path.Combine(path, ".."));
 
-            string output = newPath + "\\" + FileName;
 
-            Console.WriteLine(output);
+            // grabs the new path and adds / file.file
+
+            string dirPath = Directory.GetCurrentDirectory() + "\\" + FileName;
+
 
             using (var reader = new Mp3FileReader(path))
             {
-                WaveFileWriter.CreateWaveFile(output, reader);
+                WaveFileWriter.CreateWaveFile(dirPath, reader);
             }
-            string directory = Directory.GetCurrentDirectory() + "/music" + output;
 
-            player.SoundLocation = directory;
+            Console.WriteLine(dirPath);
+            player.SoundLocation = dirPath;
 
             player.Play();
 
