@@ -19,7 +19,10 @@ namespace MusicPlayer
 
         void start()
         {
-            string path = @"C:\Users\Marcus-Pc\Desktop\music.mp3";
+            Console.Write("Enter Path to mp3 file > ");
+            string path = Console.ReadLine();
+
+            
 
             string[] sepearator = { "/", "//", "\\", " " };
             string[] pathArray = path.Split(sepearator, StringSplitOptions.RemoveEmptyEntries);
@@ -57,6 +60,10 @@ namespace MusicPlayer
             player.SoundLocation = dirPath;
 
             player.Play();
+
+            Console.Clear();
+            Console.WriteLine("Now Playing:" + path);
+            Console.WriteLine();
 
             Console.ReadKey();
         }
